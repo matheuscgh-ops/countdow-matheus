@@ -126,39 +126,48 @@
     .day{border-radius:11px;font-size:14px}
     .day small{display:none}
   }
+  .lang{display:inline-flex;gap:2px;padding:3px;border-radius:999px;background:rgba(255,255,255,.65);border:1px solid var(--line);margin-bottom:14px}
+  .lang button{font:inherit;font-size:13px;font-weight:700;border:0;background:transparent;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+  .lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+  html[lang="ja"] body{font-family:"Plus Jakarta Sans","Hiragino Sans","Noto Sans JP","Yu Gothic",system-ui,sans-serif}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Tá chegando, Matheus! ✈️</h1>
-    <p class="sub" id="flightLine">Carregando…</p>
+    <div class="lang" role="group" aria-label="Idioma / Language / 言語">
+      <button type="button" data-lang="pt">Português</button>
+      <button type="button" data-lang="en">English</button>
+      <button type="button" data-lang="ja">日本語</button>
+    </div>
+    <h1 data-i="title"></h1>
+    <p class="sub" id="flightLine"></p>
     <span class="now" id="nowLine">—</span>
   </header>
 
-  <div class="arrived" id="arrived"><h2>Chegou o dia! Boa viagem 🇧🇷✈️</h2></div>
+  <div class="arrived" id="arrived"><h2 data-i="arrived"></h2></div>
 
   <section class="card hero">
     <div class="plane" aria-hidden="true">✈️</div>
-    <p class="label">Horas até o voo</p>
+    <p class="label" data-i="labelTotal"></p>
     <div class="num big" id="totalBig">000:00:00</div>
-    <div class="units"><span>horas</span><span>min</span><span>seg</span></div>
+    <div class="units"><span data-i="uH"></span><span data-i="uM"></span><span data-i="uS"></span></div>
     <p class="phrase"><span id="phraseWork"></span><span id="phraseNights"></span></p>
   </section>
 
   <div class="grid2">
     <section class="card work">
-      <p class="label">Horas de trabalho restantes</p>
-      <div class="num big" id="workBig">0<small>h</small>00<small>min</small></div>
+      <p class="label" data-i="labelWork"></p>
+      <div class="num big" id="workBig"></div>
       <div class="eq" id="workEq"></div>
       <div class="pill off" id="workPill"><span class="dot"></span><span id="workPillText"></span></div>
     </section>
     <section class="card">
-      <p class="label">Até o embarque</p>
+      <p class="label" data-i="labelDep"></p>
       <div class="dhm">
-        <div><div class="num" id="dD">0</div><span>dias</span></div>
-        <div><div class="num" id="dH">0</div><span>horas</span></div>
-        <div><div class="num" id="dM">0</div><span>min</span></div>
+        <div><div class="num" id="dD">0</div><span data-i="days"></span></div>
+        <div><div class="num" id="dH">0</div><span data-i="hours"></span></div>
+        <div><div class="num" id="dM">0</div><span data-i="mins"></span></div>
       </div>
       <p class="muted" style="margin:14px 2px 0" id="lastDayLine"></p>
     </section>
@@ -167,63 +176,63 @@
   <div class="grid3">
     <section class="card stat">
       <div class="icon" style="background:var(--green-soft)">💼</div>
-      <div><div class="num" id="workDays">0</div><p id="workDaysTxt">dias com trabalho pela frente</p></div>
+      <div><div class="num" id="workDays">0</div><p id="workDaysTxt"></p></div>
     </section>
     <section class="card stat">
       <div class="icon" style="background:var(--yellow-soft)">🌙</div>
-      <div><div class="num" id="nights">0</div><p id="nightsTxt">noites de sono até a viagem</p></div>
+      <div><div class="num" id="nights">0</div><p id="nightsTxt"></p></div>
     </section>
   </div>
 
   <section class="card cal">
     <div class="cal-head">
-      <p class="label" style="margin:0">Calendário até o voo</p>
-      <span class="hint">Toque num dia útil para marcar folga</span>
+      <p class="label" style="margin:0" data-i="calTitle"></p>
+      <span class="hint" data-i="calHint"></span>
     </div>
-    <div class="dow"><div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div></div>
+    <div class="dow" id="dow"></div>
     <div class="days" id="days"></div>
     <div class="legend">
-      <span><i style="background:var(--green-soft);border:1px solid #bfe6cf"></i>Trabalho</span>
-      <span><i style="background:var(--weekend);border:1px solid #dde3ea"></i>Fim de semana</span>
-      <span><i style="background:var(--off)"></i>Folga / feriado</span>
-      <span><i style="background:var(--sky)"></i>Livre (após último dia)</span>
-      <span><i style="background:linear-gradient(135deg,#12945a,#f2b705)"></i>Dia da viagem</span>
+      <span><i style="background:var(--green-soft);border:1px solid #bfe6cf"></i><span data-i="lgWork"></span></span>
+      <span><i style="background:var(--weekend);border:1px solid #dde3ea"></i><span data-i="lgWeekend"></span></span>
+      <span><i style="background:var(--off)"></i><span data-i="lgOff"></span></span>
+      <span><i style="background:var(--sky)"></i><span data-i="lgFree"></span></span>
+      <span><i style="background:linear-gradient(135deg,#12945a,#f2b705)"></i><span data-i="lgFlight"></span></span>
     </div>
   </section>
 
   <details class="card settings" id="settingsBox">
-    <summary>⚙️ Configurações <span class="chev">▾</span></summary>
+    <summary><span data-i="settings"></span> <span class="chev">▾</span></summary>
     <div class="form">
-      <div class="group-title">Voo</div>
-      <label>Data do voo<input type="date" id="flightDate"></label>
-      <label>Horário do voo<input type="time" id="flightTime"></label>
-      <label>Último dia de trabalho<input type="date" id="lastWorkDay"></label>
+      <div class="group-title" data-i="gFlight"></div>
+      <label><span data-i="fFlightDate"></span><input type="date" id="flightDate"></label>
+      <label><span data-i="fFlightTime"></span><input type="time" id="flightTime"></label>
+      <label><span data-i="fLastWork"></span><input type="date" id="lastWorkDay"></label>
 
-      <div class="group-title">Expediente (seg–sex)</div>
-      <label>Início<input type="time" id="workStart"></label>
-      <label>Fim<input type="time" id="workEnd"></label>
-      <label>Almoço começa<input type="time" id="lunchStart"></label>
-      <label>Almoço termina<input type="time" id="lunchEnd"></label>
+      <div class="group-title" data-i="gWork"></div>
+      <label><span data-i="fWorkStart"></span><input type="time" id="workStart"></label>
+      <label><span data-i="fWorkEnd"></span><input type="time" id="workEnd"></label>
+      <label><span data-i="fLunchStart"></span><input type="time" id="lunchStart"></label>
+      <label><span data-i="fLunchEnd"></span><input type="time" id="lunchEnd"></label>
       <div class="warn" id="warn"></div>
 
-      <div class="group-title">Sono</div>
-      <label>Horário de dormir<input type="time" id="bedtime"></label>
+      <div class="group-title" data-i="gSleep"></div>
+      <label><span data-i="fBedtime"></span><input type="time" id="bedtime"></label>
 
-      <div class="group-title">Folgas e feriados</div>
+      <div class="group-title" data-i="gOff"></div>
       <div class="row">
-        <label>Adicionar data<input type="date" id="offInput"></label>
-        <button class="btn" id="offAdd" type="button">Adicionar</button>
+        <label><span data-i="fAddDate"></span><input type="date" id="offInput"></label>
+        <button class="btn" id="offAdd" type="button" data-i="add"></button>
       </div>
       <div class="offs" id="offList"></div>
 
       <div class="row" style="justify-content:space-between;margin-top:6px">
-        <span class="muted">Tudo é salvo neste navegador. Horários sempre no fuso de Seattle.</span>
-        <button class="btn ghost" id="reset" type="button">Restaurar padrão</button>
+        <span class="muted" data-i="savedNote"></span>
+        <button class="btn ghost" id="reset" type="button" data-i="reset"></button>
       </div>
     </div>
   </details>
 
-  <footer>Todos os cálculos usam o fuso America/Los_Angeles (Seattle/Bellevue), onde quer que você abra a página.</footer>
+  <footer data-i="footer"></footer>
 </div>
 
 <script>
@@ -234,7 +243,7 @@ const DEFAULTS = {
   workStart: '09:00', workEnd: '18:00', lunchStart: '12:00', lunchEnd: '13:00',
   bedtime: '23:00', daysOff: []
 };
-const HOUR = 3600000, MIN = 60000, DAY = 86400000;
+const HOUR = 3600000, MIN = 60000;
 
 const partsFmt = new Intl.DateTimeFormat('en-US', {
   timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit',
@@ -268,8 +277,7 @@ function laYmd(ms) {
 }
 function addDays(ymd, n) {
   const [y, m, d] = ymd.split('-').map(Number);
-  const t = new Date(Date.UTC(y, m - 1, d + n));
-  return t.toISOString().slice(0, 10);
+  return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10);
 }
 function weekday(ymd) {
   const [y, m, d] = ymd.split('-').map(Number);
@@ -300,7 +308,7 @@ function compute(s, now) {
   const blocks = workBlocks(s);
 
   // Remaining work time: only future parts of work blocks, before the flight.
-  let workMs = 0, workDays = 0, inWork = false, lastWorkDate = null;
+  let workMs = 0, workDays = 0, inWork = false, lastWorkDate = null, todayWork = false;
   const lastDay = s.lastWorkDay && s.lastWorkDay < s.flightDate ? s.lastWorkDay : s.flightDate;
   for (let d = today, i = 0; d <= lastDay && i < 800; d = addDays(d, 1), i++) {
     if (isWeekend(d) || off.has(d)) continue;
@@ -311,7 +319,7 @@ function compute(s, now) {
       if (e2 > s2) dayMs += e2 - s2;
       if (now >= A && now < B && now < flight) inWork = true;
     }
-    if (dayMs > 0) { workMs += dayMs; workDays++; lastWorkDate = d; }
+    if (dayMs > 0) { workMs += dayMs; workDays++; lastWorkDate = d; if (d === today) todayWork = true; }
   }
 
   // Nights: bedtimes still in the future and before the flight, from today to the eve of the flight.
@@ -322,9 +330,121 @@ function compute(s, now) {
     if (t > now && t < flight) nights++;
   }
 
-  return { flight, remain, today, workMs, workDays, inWork, nights, lastWorkDate, done: remain === 0 };
+  return { flight, remain, today, workMs, workDays, inWork, todayWork, nights, lastWorkDate, done: remain === 0 };
 }
 /*CORE-END*/
+
+// ---------- Translations (order: Portuguese, English, Japanese) ----------
+const I18N = {
+  pt: {
+    locale: 'pt-BR',
+    title: 'Tá chegando, Matheus! ✈️',
+    arrived: 'Chegou o dia! Boa viagem 🇧🇷✈️',
+    flightLine: d => `Voo <b>${d}</b> · horário de Seattle`,
+    nowPrefix: 'Agora em Seattle: ',
+    labelTotal: 'Horas até o voo', uH: 'horas', uM: 'min', uS: 'seg',
+    labelWork: 'Horas de trabalho restantes', hU: 'h', mU: 'min',
+    workEq: n => `≈ <b>${n}</b> jornadas de 8 horas`,
+    workDone: 'Trabalho encerrado até a viagem 🎉',
+    pillOn: 'Expediente em andamento — descendo', pillOff: 'Fora do expediente — pausado',
+    pillNone: 'Nada mais de expediente', pillVac: 'Férias!',
+    labelDep: 'Até o embarque', days: 'dias', hours: 'horas', mins: 'min',
+    lastDay: d => 'Último dia com expediente: ' + d,
+    noMoreWork: 'Sem mais expedientes antes do voo.',
+    workDaysTxt: (n, today) => (n === 1 ? 'dia com trabalho pela frente' : 'dias com trabalho pela frente') + (today ? ' (incluindo hoje)' : ''),
+    nightsTxt: n => n === 1 ? 'noite de sono até a viagem' : 'noites de sono até a viagem',
+    phraseDone: 'Boa viagem! O Brasil te espera 🇧🇷',
+    pwZero: 'Zero horas de trabalho pela frente. Agora é só fazer as malas 🧳',
+    pwMin: n => `Só mais ${n} ${n === 1 ? 'minuto' : 'minutos'} de trabalho 💪`,
+    pwHour: n => `Só mais ${n} ${n === 1 ? 'hora' : 'horas'} de trabalho 💪`,
+    pn: n => `Mais ${n} ${n === 1 ? 'noite' : 'noites'} e partiu Brasil 🇧🇷`,
+    pnZero: 'Nenhuma noite a mais — partiu Brasil 🇧🇷',
+    calTitle: 'Calendário até o voo', calHint: 'Toque num dia útil para marcar folga',
+    dow: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+    tWork: 'trabalho', tOff: 'folga', tFree: 'livre', tFlight: 'voo ✈️',
+    markOff: 'Marcar como folga', removeOff: 'Remover folga',
+    lgWork: 'Trabalho', lgWeekend: 'Fim de semana', lgOff: 'Folga / feriado', lgFree: 'Livre (após último dia)', lgFlight: 'Dia da viagem',
+    settings: '⚙️ Configurações', gFlight: 'Voo', fFlightDate: 'Data do voo', fFlightTime: 'Horário do voo', fLastWork: 'Último dia de trabalho',
+    gWork: 'Expediente (seg–sex)', fWorkStart: 'Início', fWorkEnd: 'Fim', fLunchStart: 'Almoço começa', fLunchEnd: 'Almoço termina',
+    gSleep: 'Sono', fBedtime: 'Horário de dormir', gOff: 'Folgas e feriados', fAddDate: 'Adicionar data', add: 'Adicionar',
+    noOffs: 'Nenhuma folga marcada.', remove: 'Remover',
+    savedNote: 'Tudo é salvo neste navegador. Horários sempre no fuso de Seattle.', reset: 'Restaurar padrão',
+    warnWork: 'O fim do expediente precisa ser depois do início.', warnLunch: 'O fim do almoço precisa ser depois do início.',
+    footer: 'Todos os cálculos usam o fuso America/Los_Angeles (Seattle/Bellevue), onde quer que você abra a página.'
+  },
+  en: {
+    locale: 'en-US',
+    title: 'Almost there, Matheus! ✈️',
+    arrived: 'The day is here! Have a great trip 🇧🇷✈️',
+    flightLine: d => `Flight <b>${d}</b> · Seattle time`,
+    nowPrefix: 'Now in Seattle: ',
+    labelTotal: 'Hours until the flight', uH: 'hours', uM: 'min', uS: 'sec',
+    labelWork: 'Work hours left', hU: 'h', mU: 'min',
+    workEq: n => `≈ <b>${n}</b> 8-hour workdays`,
+    workDone: 'No more work before the trip 🎉',
+    pillOn: 'Working hours — counting down', pillOff: 'Off the clock — paused',
+    pillNone: 'No more working hours', pillVac: 'Vacation!',
+    labelDep: 'Until boarding', days: 'days', hours: 'hours', mins: 'min',
+    lastDay: d => 'Last workday: ' + d,
+    noMoreWork: 'No more workdays before the flight.',
+    workDaysTxt: (n, today) => (n === 1 ? 'workday left' : 'workdays left') + (today ? ' (including today)' : ''),
+    nightsTxt: n => n === 1 ? 'night of sleep until the trip' : 'nights of sleep until the trip',
+    phraseDone: 'Have a great trip! Brazil is waiting 🇧🇷',
+    pwZero: 'Zero work hours left. Time to pack 🧳',
+    pwMin: n => `Just ${n} more ${n === 1 ? 'minute' : 'minutes'} of work 💪`,
+    pwHour: n => `Just ${n} more ${n === 1 ? 'hour' : 'hours'} of work 💪`,
+    pn: n => `${n} more ${n === 1 ? 'night' : 'nights'} and off to Brazil 🇧🇷`,
+    pnZero: 'No more nights — off to Brazil 🇧🇷',
+    calTitle: 'Calendar until the flight', calHint: 'Tap a weekday to mark a day off',
+    dow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    tWork: 'work', tOff: 'off', tFree: 'free', tFlight: 'flight ✈️',
+    markOff: 'Mark as day off', removeOff: 'Remove day off',
+    lgWork: 'Workday', lgWeekend: 'Weekend', lgOff: 'Day off / holiday', lgFree: 'Free (after last workday)', lgFlight: 'Travel day',
+    settings: '⚙️ Settings', gFlight: 'Flight', fFlightDate: 'Flight date', fFlightTime: 'Flight time', fLastWork: 'Last workday',
+    gWork: 'Working hours (Mon–Fri)', fWorkStart: 'Start', fWorkEnd: 'End', fLunchStart: 'Lunch starts', fLunchEnd: 'Lunch ends',
+    gSleep: 'Sleep', fBedtime: 'Bedtime', gOff: 'Days off & holidays', fAddDate: 'Add date', add: 'Add',
+    noOffs: 'No days off marked.', remove: 'Remove',
+    savedNote: 'Everything is saved in this browser. Times are always in Seattle time.', reset: 'Reset to defaults',
+    warnWork: 'Work must end after it starts.', warnLunch: 'Lunch must end after it starts.',
+    footer: 'All calculations use the America/Los_Angeles time zone (Seattle/Bellevue), wherever you open this page.'
+  },
+  ja: {
+    locale: 'ja-JP',
+    title: 'もうすぐだよ、Matheus！✈️',
+    arrived: 'ついにその日！良い旅を 🇧🇷✈️',
+    flightLine: d => `フライト <b>${d}</b>・シアトル時間`,
+    nowPrefix: 'シアトルの現在時刻：',
+    labelTotal: 'フライトまでの時間', uH: '時間', uM: '分', uS: '秒',
+    labelWork: '残りの勤務時間', hU: '時間', mU: '分',
+    workEq: n => `≈ 8時間勤務 <b>${n}</b> 日分`,
+    workDone: '出発前の仕事はもう終わり 🎉',
+    pillOn: '勤務中 — カウントダウン中', pillOff: '勤務時間外 — 一時停止',
+    pillNone: '残りの勤務はありません', pillVac: '休暇だ！',
+    labelDep: '搭乗まで', days: '日', hours: '時間', mins: '分',
+    lastDay: d => '最終勤務日：' + d,
+    noMoreWork: 'フライト前の勤務日はもうありません。',
+    workDaysTxt: (n, today) => '日の勤務日が残っています' + (today ? '（今日を含む）' : ''),
+    nightsTxt: n => '回寝たら出発',
+    phraseDone: '良い旅を！ブラジルが待ってるよ 🇧🇷',
+    pwZero: '残りの仕事はゼロ。あとは荷造りだけ 🧳',
+    pwMin: n => `仕事はあと ${n} 分だけ 💪`,
+    pwHour: n => `仕事はあと ${n} 時間だけ 💪`,
+    pn: n => `あと ${n} 回寝たらブラジルへ出発 🇧🇷`,
+    pnZero: 'もう寝る夜はなし — ブラジルへ出発 🇧🇷',
+    calTitle: 'フライトまでのカレンダー', calHint: '平日をタップすると休みに設定できます',
+    dow: ['日', '月', '火', '水', '木', '金', '土'],
+    tWork: '勤務', tOff: '休み', tFree: 'フリー', tFlight: '出発 ✈️',
+    markOff: '休みにする', removeOff: '休みを解除',
+    lgWork: '勤務日', lgWeekend: '週末', lgOff: '休み・祝日', lgFree: 'フリー（最終勤務日以降）', lgFlight: '出発日',
+    settings: '⚙️ 設定', gFlight: 'フライト', fFlightDate: 'フライト日', fFlightTime: 'フライト時刻', fLastWork: '最終勤務日',
+    gWork: '勤務時間（月〜金）', fWorkStart: '開始', fWorkEnd: '終了', fLunchStart: '昼休み開始', fLunchEnd: '昼休み終了',
+    gSleep: '睡眠', fBedtime: '就寝時刻', gOff: '休み・祝日', fAddDate: '日付を追加', add: '追加',
+    noOffs: '休みは設定されていません。', remove: '削除',
+    savedNote: '設定はこのブラウザに保存されます。時刻は常にシアトル時間です。', reset: '初期設定に戻す',
+    warnWork: '勤務終了は開始より後にしてください。', warnLunch: '昼休みの終了は開始より後にしてください。',
+    footer: 'すべての計算は America/Los_Angeles（シアトル／ベルビュー）のタイムゾーンで行われます。どこで開いても同じです。'
+  }
+};
 
 // ---------- State & storage ----------
 const KEY = 'brasil-countdown-v1';
@@ -332,22 +452,34 @@ let S = load();
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return { ...DEFAULTS, ...JSON.parse(raw) };
+    if (raw) return { lang: 'pt', ...DEFAULTS, ...JSON.parse(raw) };
   } catch (e) {}
-  return { ...DEFAULTS, daysOff: [] };
+  return { lang: 'pt', ...DEFAULTS, daysOff: [] };
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 
-// ---------- Formatting ----------
+// ---------- Formatting (rebuilt whenever the language changes) ----------
 const $ = id => document.getElementById(id);
 const pad = n => String(n).padStart(2, '0');
-const nf1 = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
-const fmtNow = new Intl.DateTimeFormat('pt-BR', { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' });
-const fmtFlight = new Intl.DateTimeFormat('pt-BR', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
-const fmtShort = new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC', weekday: 'short', day: '2-digit', month: '2-digit' });
-const fmtMonth = new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC', month: 'long', year: 'numeric' });
+let T, F;
+function applyLang() {
+  if (!I18N[S.lang]) S.lang = 'pt';
+  T = I18N[S.lang];
+  const L = T.locale;
+  F = {
+    nf1: new Intl.NumberFormat(L, { maximumFractionDigits: 1, minimumFractionDigits: 1 }),
+    now: new Intl.DateTimeFormat(L, { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+    flight: new Intl.DateTimeFormat(L, { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }),
+    short: new Intl.DateTimeFormat(L, { timeZone: 'UTC', weekday: 'short', day: '2-digit', month: '2-digit' }),
+    month: new Intl.DateTimeFormat(L, { timeZone: 'UTC', month: 'long', year: 'numeric' })
+  };
+  document.documentElement.lang = S.lang === 'pt' ? 'pt-BR' : S.lang;
+  document.title = T.title;
+  document.querySelectorAll('[data-i]').forEach(el => { el.textContent = T[el.dataset.i]; });
+  $('dow').innerHTML = T.dow.map(d => `<div>${d}</div>`).join('');
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === S.lang)));
+}
 const ymdToDate = ymd => { const [y, m, d] = ymd.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d, 12)); };
-const plural = (n, one, many) => n === 1 ? one : many;
 
 // ---------- Rendering ----------
 let lastCalKey = '';
@@ -355,8 +487,8 @@ function tick() {
   const now = Date.now();
   const r = compute(S, now);
 
-  $('nowLine').textContent = 'Agora em Seattle: ' + fmtNow.format(now);
-  $('flightLine').innerHTML = 'Voo <b>' + fmtFlight.format(r.flight) + '</b> · horário de Seattle';
+  $('nowLine').textContent = T.nowPrefix + F.now.format(now);
+  $('flightLine').innerHTML = T.flightLine(F.flight.format(r.flight));
   document.body.classList.toggle('done', r.done);
 
   // Total countdown
@@ -366,47 +498,35 @@ function tick() {
 
   // Work countdown (rounded up to the minute so it only reaches 0 when really done)
   const wMin = Math.ceil(r.workMs / MIN);
-  $('workBig').innerHTML = `${Math.floor(wMin / 60)}<small>h</small>${pad(wMin % 60)}<small>min</small>`;
-  const jornadas = r.workMs / (8 * HOUR);
-  $('workEq').innerHTML = r.workMs > 0
-    ? `≈ <b>${nf1.format(jornadas)}</b> ${plural(Math.round(jornadas * 10) / 10, 'jornada', 'jornadas')} de 8 horas`
-    : 'Trabalho encerrado até a viagem 🎉';
-  const pill = $('workPill');
-  pill.className = 'pill ' + (r.inWork ? 'on' : 'off');
-  $('workPillText').textContent = r.done ? 'Férias!' : r.inWork ? 'Expediente em andamento — descendo' : (r.workMs > 0 ? 'Fora do expediente — pausado' : 'Nada mais de expediente');
+  $('workBig').innerHTML = `${Math.floor(wMin / 60)}<small>${T.hU}</small>${pad(wMin % 60)}<small>${T.mU}</small>`;
+  $('workEq').innerHTML = r.workMs > 0 ? T.workEq(F.nf1.format(r.workMs / (8 * HOUR))) : T.workDone;
+  $('workPill').className = 'pill ' + (r.inWork ? 'on' : 'off');
+  $('workPillText').textContent = r.done ? T.pillVac : r.inWork ? T.pillOn : (r.workMs > 0 ? T.pillOff : T.pillNone);
 
   // Days / hours / minutes
   const mins = Math.floor(r.remain / MIN);
   $('dD').textContent = Math.floor(mins / 1440);
   $('dH').textContent = Math.floor(mins % 1440 / 60);
   $('dM').textContent = mins % 60;
-  $('lastDayLine').textContent = r.lastWorkDate
-    ? 'Último dia com expediente: ' + fmtShort.format(ymdToDate(r.lastWorkDate))
-    : (r.done ? '' : 'Sem mais expedientes antes do voo.');
+  $('lastDayLine').textContent = r.lastWorkDate ? T.lastDay(F.short.format(ymdToDate(r.lastWorkDate))) : (r.done ? '' : T.noMoreWork);
 
   // Work days & nights
   $('workDays').textContent = r.workDays;
-  const todayHasWork = r.workDays > 0 && r.lastWorkDate && compute({ ...S, lastWorkDay: r.today < S.flightDate ? r.today : S.flightDate }, now).workMs > 0;
-  $('workDaysTxt').textContent = plural(r.workDays, 'dia com trabalho pela frente', 'dias com trabalho pela frente') + (todayHasWork ? ' (incluindo hoje)' : '');
+  $('workDaysTxt').textContent = T.workDaysTxt(r.workDays, r.todayWork);
   $('nights').textContent = r.nights;
-  $('nightsTxt').textContent = plural(r.nights, 'noite de sono até a viagem', 'noites de sono até a viagem');
+  $('nightsTxt').textContent = T.nightsTxt(r.nights);
 
   // Phrases
   if (r.done) {
-    $('phraseWork').textContent = 'Boa viagem! O Brasil te espera 🇧🇷';
+    $('phraseWork').textContent = T.phraseDone;
     $('phraseNights').textContent = '';
   } else {
-    let pw;
-    if (r.workMs <= 0) pw = 'Zero horas de trabalho pela frente. Agora é só fazer as malas 🧳';
-    else if (r.workMs < HOUR) pw = `Só mais ${wMin} ${plural(wMin, 'minuto', 'minutos')} de trabalho 💪`;
-    else { const h = Math.round(r.workMs / HOUR); pw = `Só mais ${h} ${plural(h, 'hora', 'horas')} de trabalho 💪`; }
-    $('phraseWork').textContent = pw;
-    $('phraseNights').textContent = r.nights > 0
-      ? `Mais ${r.nights} ${plural(r.nights, 'noite', 'noites')} e partiu Brasil 🇧🇷`
-      : 'Nenhuma noite a mais — partiu Brasil 🇧🇷';
+    $('phraseWork').textContent = r.workMs <= 0 ? T.pwZero
+      : r.workMs < HOUR ? T.pwMin(wMin) : T.pwHour(Math.round(r.workMs / HOUR));
+    $('phraseNights').textContent = r.nights > 0 ? T.pn(r.nights) : T.pnZero;
   }
 
-  const calKey = r.today + JSON.stringify(S);
+  const calKey = S.lang + r.today + JSON.stringify(S);
   if (calKey !== lastCalKey) { lastCalKey = calKey; renderCalendar(r); }
 }
 
@@ -415,44 +535,34 @@ function renderCalendar(r) {
   box.innerHTML = '';
   const off = new Set(S.daysOff);
   const lastDay = S.lastWorkDay && S.lastWorkDay < S.flightDate ? S.lastWorkDay : S.flightDate;
-  let start = r.today;
-  if (start > S.flightDate) start = S.flightDate;
+  const start = r.today > S.flightDate ? S.flightDate : r.today;
   const gridStart = addDays(start, -weekday(start));
   const gridEnd = addDays(S.flightDate, 6 - weekday(S.flightDate));
-  if (gridEnd < gridStart) return;
   let curMonth = '';
   for (let d = gridStart, i = 0; d <= gridEnd && i < 400; d = addDays(d, 1), i++) {
-    const month = d.slice(0, 7);
-    if (weekday(d) === 0 && month !== curMonth) {
-      // Month label at the start of each week where the month changes
-      curMonth = month;
-      const ml = document.createElement('div');
-      ml.className = 'month';
-      ml.textContent = fmtMonth.format(ymdToDate(d));
-      box.appendChild(ml);
-    } else if (weekday(d) === 0) {
-      const wEnd = addDays(d, 6).slice(0, 7);
-      if (wEnd !== curMonth) {
-        curMonth = wEnd;
+    if (weekday(d) === 0) {
+      // Month label at the start of each week where a new month appears
+      const first = d.slice(0, 7) !== curMonth ? d : (addDays(d, 6).slice(0, 7) !== curMonth ? addDays(d, 6) : null);
+      if (first) {
+        curMonth = first.slice(0, 7);
         const ml = document.createElement('div');
         ml.className = 'month';
-        ml.textContent = fmtMonth.format(ymdToDate(addDays(d, 6)));
+        ml.textContent = F.month.format(ymdToDate(first));
         box.appendChild(ml);
       }
     }
     const el = document.createElement('div');
     el.className = 'day';
-    const dayNum = +d.slice(8);
     let tag = '';
-    if (d < start) { el.classList.add('past'); }
-    else if (d > S.flightDate) { el.classList.add('blank'); }
-    else if (d === S.flightDate) { el.classList.add('flight'); tag = 'voo ✈️'; }
-    else if (isWeekend(d)) { el.classList.add('weekend'); }
-    else if (off.has(d)) { el.classList.add('off'); tag = 'folga'; el.onclick = () => toggleOff(d); el.title = 'Remover folga'; }
-    else if (d > lastDay) { el.classList.add('free'); tag = 'livre'; }
-    else { el.classList.add('work'); tag = 'trabalho'; el.onclick = () => toggleOff(d); el.title = 'Marcar como folga'; }
+    if (d < start) el.classList.add('past');
+    else if (d > S.flightDate) el.classList.add('blank');
+    else if (d === S.flightDate) { el.classList.add('flight'); tag = T.tFlight; }
+    else if (isWeekend(d)) el.classList.add('weekend');
+    else if (off.has(d)) { el.classList.add('off'); tag = T.tOff; el.onclick = () => toggleOff(d); el.title = T.removeOff; }
+    else if (d > lastDay) { el.classList.add('free'); tag = T.tFree; }
+    else { el.classList.add('work'); tag = T.tWork; el.onclick = () => toggleOff(d); el.title = T.markOff; }
     if (d === r.today) el.classList.add('today');
-    el.innerHTML = dayNum + (tag ? `<small>${tag}</small>` : '');
+    el.innerHTML = +d.slice(8) + (tag ? `<small>${tag}</small>` : '');
     box.appendChild(el);
   }
 }
@@ -474,19 +584,19 @@ function fillForm() {
 function renderOffs() {
   const list = $('offList');
   list.innerHTML = '';
-  if (!S.daysOff.length) { list.innerHTML = '<span class="muted">Nenhuma folga marcada.</span>'; return; }
+  if (!S.daysOff.length) { list.innerHTML = `<span class="muted">${T.noOffs}</span>`; return; }
   for (const d of S.daysOff) {
     const c = document.createElement('span');
     c.className = 'chip';
-    c.innerHTML = `${fmtShort.format(ymdToDate(d))} <button type="button" aria-label="Remover">×</button>`;
+    c.innerHTML = `${F.short.format(ymdToDate(d))} <button type="button" aria-label="${T.remove}">×</button>`;
     c.querySelector('button').onclick = () => toggleOff(d);
     list.appendChild(c);
   }
 }
 function validate() {
   const msgs = [];
-  if (toMin(S.workEnd) <= toMin(S.workStart)) msgs.push('O fim do expediente precisa ser depois do início.');
-  if (toMin(S.lunchEnd) <= toMin(S.lunchStart)) msgs.push('O fim do almoço precisa ser depois do início.');
+  if (toMin(S.workEnd) <= toMin(S.workStart)) msgs.push(T.warnWork);
+  if (toMin(S.lunchEnd) <= toMin(S.lunchStart)) msgs.push(T.warnLunch);
   const w = $('warn');
   w.textContent = msgs.join(' ');
   w.style.display = msgs.length ? 'block' : 'none';
@@ -504,8 +614,10 @@ $('offAdd').onclick = () => {
   const v = $('offInput').value;
   if (v && !S.daysOff.includes(v)) { S.daysOff = [...S.daysOff, v].sort(); $('offInput').value = ''; commit(); }
 };
-$('reset').onclick = () => { S = { ...DEFAULTS, daysOff: [] }; commit(); };
+$('reset').onclick = () => { S = { lang: S.lang, ...DEFAULTS, daysOff: [] }; commit(); };
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { S.lang = b.dataset.lang; applyLang(); commit(); });
 
+applyLang();
 fillForm();
 tick();
 // Align ticks to the second boundary for smooth updates
