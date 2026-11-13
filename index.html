@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tá chegando, Matheus! ✈️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10283a; --muted:#5d7385; --soft:#8aa0b1;
+    --card:rgba(255,255,255,.74); --line:rgba(16,40,58,.08);
+    --blue:#2b6fd6; --green:#12945a; --green-soft:#dff4e8;
+    --yellow:#f2b705; --yellow-soft:#fff3c9; --sky:#e7f1fb;
+    --weekend:#eef1f5; --off:#ffe3d3; --off-ink:#b4532a;
+    --radius:24px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(255,214,140,.55), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(140,200,255,.55), transparent 60%),
+      linear-gradient(180deg,#d9ecff 0%,#f4f8fc 45%,#fff6ea 100%);
+    background-attachment:fixed;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+  header{text-align:center;margin:8px 0 22px}
+  h1{font-size:clamp(30px,6vw,48px);font-weight:800;letter-spacing:-.02em;margin:0 0 8px}
+  .sub{color:var(--muted);font-size:15px;margin:0}
+  .sub b{color:var(--ink);font-weight:600}
+  .now{display:inline-block;margin-top:10px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.6);border:1px solid var(--line);padding:5px 12px;border-radius:999px}
+
+  .card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.8);border-radius:var(--radius);box-shadow:0 10px 40px -18px rgba(16,40,58,.25);padding:22px}
+  .label{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";font-weight:800;letter-spacing:-.03em;line-height:1}
+
+  .hero{text-align:center;padding:30px 20px 26px;position:relative;overflow:hidden}
+  .hero .big{font-size:clamp(58px,15vw,128px);background:linear-gradient(135deg,#1c4f9c,#2b6fd6 45%,#12945a);-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0 4px}
+  .units{display:flex;justify-content:center;gap:clamp(18px,6vw,58px);color:var(--soft);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+  .phrase{margin:18px auto 0;font-size:clamp(17px,3.6vw,21px);font-weight:600;max-width:640px}
+  .phrase span{display:block;margin-top:4px}
+
+  .grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;margin-top:16px}
+  .work .big{font-size:clamp(46px,10vw,78px);color:var(--green);margin:8px 0 6px}
+  .work .big small{font-size:.45em;font-weight:700;color:var(--green);opacity:.75;margin:0 6px 0 2px}
+  .eq{color:var(--muted);font-size:15px}
+  .eq b{color:var(--ink)}
+  .pill{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:13px;font-weight:600;padding:6px 12px;border-radius:999px}
+  .pill.on{background:var(--green-soft);color:var(--green)}
+  .pill.off{background:var(--sky);color:var(--blue)}
+  .dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+  .pill.on .dot{animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+  .dhm{display:flex;gap:10px;margin-top:10px}
+  .dhm div{flex:1;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:16px;padding:14px 6px;text-align:center}
+  .dhm .num{font-size:clamp(34px,7vw,48px);color:var(--blue)}
+  .dhm span{display:block;font-size:12px;color:var(--muted);margin-top:6px;font-weight:600}
+
+  .grid3{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  .stat{display:flex;align-items:center;gap:16px}
+  .stat .icon{font-size:30px;width:58px;height:58px;display:grid;place-items:center;border-radius:18px;flex:none}
+  .stat .num{font-size:44px}
+  .stat p{margin:2px 0 0;color:var(--muted);font-size:14px}
+
+  .cal{margin-top:16px}
+  .cal-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+  .cal-head .hint{font-size:13px;color:var(--soft)}
+  .dow,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .dow{margin:14px 0 6px}
+  .dow div{text-align:center;font-size:12px;font-weight:700;color:var(--soft)}
+  .month{grid-column:1/-1;font-size:13px;font-weight:700;color:var(--muted);margin:8px 2px 0;text-transform:capitalize}
+  .day{aspect-ratio:1/1;max-height:64px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:15px;border:1px solid transparent;position:relative;user-select:none}
+  .day small{font-size:10px;font-weight:600;margin-top:1px;opacity:.8}
+  .day.blank{visibility:hidden}
+  .day.past{color:#c3ced8}
+  .day.work{background:var(--green-soft);color:var(--green);cursor:pointer}
+  .day.weekend{background:var(--weekend);color:var(--soft)}
+  .day.off{background:var(--off);color:var(--off-ink);cursor:pointer}
+  .day.free{background:var(--sky);color:var(--blue)}
+  .day.flight{background:linear-gradient(135deg,#12945a,#f2b705);color:#fff;box-shadow:0 6px 18px -6px rgba(18,148,90,.6)}
+  .day.today{outline:2px solid var(--ink);outline-offset:1px}
+  .day.work:hover,.day.off:hover{filter:brightness(.96)}
+  .legend{display:flex;flex-wrap:wrap;gap:12px 16px;margin-top:14px;font-size:12.5px;color:var(--muted)}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+
+  details.settings{margin-top:16px}
+  details.settings summary{cursor:pointer;list-style:none;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+  details.settings summary::-webkit-details-marker{display:none}
+  details.settings summary .chev{transition:transform .2s;color:var(--soft)}
+  details[open].settings summary .chev{transform:rotate(180deg)}
+  .form{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:18px}
+  .form label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
+  input[type=date],input[type=time]{font:inherit;font-size:15px;color:var(--ink);padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;width:100%}
+  .group-title{grid-column:1/-1;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin-top:6px}
+  .offs{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--off);color:var(--off-ink);font-size:13px;font-weight:600;padding:6px 6px 6px 12px;border-radius:999px}
+  .chip button{border:0;background:rgba(255,255,255,.7);color:var(--off-ink);width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1}
+  .row{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+  .row label{flex:1;min-width:180px}
+  .btn{font:inherit;font-weight:700;font-size:14px;border:0;border-radius:12px;padding:11px 16px;cursor:pointer;background:var(--ink);color:#fff}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+  .warn{grid-column:1/-1;color:#b4532a;font-size:13px;font-weight:600;display:none}
+  .muted{color:var(--soft);font-size:13px}
+  footer{text-align:center;color:var(--soft);font-size:12.5px;margin-top:26px}
+
+  .arrived{display:none;margin:0 0 16px;text-align:center;padding:26px 18px;border-radius:var(--radius);color:#fff;background:linear-gradient(135deg,#0f8a52,#12945a 40%,#f2b705);box-shadow:0 14px 40px -16px rgba(18,148,90,.7)}
+  .arrived h2{margin:0;font-size:clamp(26px,6vw,40px);font-weight:800}
+  body.done .arrived{display:block}
+  body.done .hero .big{background:linear-gradient(135deg,#12945a,#f2b705);-webkit-background-clip:text;background-clip:text}
+
+  .plane{position:absolute;top:18px;left:-60px;font-size:26px;opacity:.5;animation:fly 18s linear infinite}
+  @keyframes fly{from{transform:translateX(0) translateY(0)}to{transform:translateX(calc(100vw + 120px)) translateY(-10px)}}
+  @media (prefers-reduced-motion:reduce){.plane,.pill.on .dot{animation:none}.plane{display:none}}
+
+  @media (max-width:720px){
+    .grid2,.grid3{grid-template-columns:1fr}
+    .wrap{padding:20px 14px 48px}
+    .card{padding:18px}
+    .day{border-radius:11px;font-size:14px}
+    .day small{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Tá chegando, Matheus! ✈️</h1>
+    <p class="sub" id="flightLine">Carregando…</p>
+    <span class="now" id="nowLine">—</span>
+  </header>
+
+  <div class="arrived" id="arrived"><h2>Chegou o dia! Boa viagem 🇧🇷✈️</h2></div>
+
+  <section class="card hero">
+    <div class="plane" aria-hidden="true">✈️</div>
+    <p class="label">Horas até o voo</p>
+    <div class="num big" id="totalBig">000:00:00</div>
+    <div class="units"><span>horas</span><span>min</span><span>seg</span></div>
+    <p class="phrase"><span id="phraseWork"></span><span id="phraseNights"></span></p>
+  </section>
+
+  <div class="grid2">
+    <section class="card work">
+      <p class="label">Horas de trabalho restantes</p>
+      <div class="num big" id="workBig">0<small>h</small>00<small>min</small></div>
+      <div class="eq" id="workEq"></div>
+      <div class="pill off" id="workPill"><span class="dot"></span><span id="workPillText"></span></div>
+    </section>
+    <section class="card">
+      <p class="label">Até o embarque</p>
+      <div class="dhm">
+        <div><div class="num" id="dD">0</div><span>dias</span></div>
+        <div><div class="num" id="dH">0</div><span>horas</span></div>
+        <div><div class="num" id="dM">0</div><span>min</span></div>
+      </div>
+      <p class="muted" style="margin:14px 2px 0" id="lastDayLine"></p>
+    </section>
+  </div>
+
+  <div class="grid3">
+    <section class="card stat">
+      <div class="icon" style="background:var(--green-soft)">💼</div>
+      <div><div class="num" id="workDays">0</div><p id="workDaysTxt">dias com trabalho pela frente</p></div>
+    </section>
+    <section class="card stat">
+      <div class="icon" style="background:var(--yellow-soft)">🌙</div>
+      <div><div class="num" id="nights">0</div><p id="nightsTxt">noites de sono até a viagem</p></div>
+    </section>
+  </div>
+
+  <section class="card cal">
+    <div class="cal-head">
+      <p class="label" style="margin:0">Calendário até o voo</p>
+      <span class="hint">Toque num dia útil para marcar folga</span>
+    </div>
+    <div class="dow"><div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div></div>
+    <div class="days" id="days"></div>
+    <div class="legend">
+      <span><i style="background:var(--green-soft);border:1px solid #bfe6cf"></i>Trabalho</span>
+      <span><i style="background:var(--weekend);border:1px solid #dde3ea"></i>Fim de semana</span>
+      <span><i style="background:var(--off)"></i>Folga / feriado</span>
+      <span><i style="background:var(--sky)"></i>Livre (após último dia)</span>
+      <span><i style="background:linear-gradient(135deg,#12945a,#f2b705)"></i>Dia da viagem</span>
+    </div>
+  </section>
+
+  <details class="card settings" id="settingsBox">
+    <summary>⚙️ Configurações <span class="chev">▾</span></summary>
+    <div class="form">
+      <div class="group-title">Voo</div>
+      <label>Data do voo<input type="date" id="flightDate"></label>
+      <label>Horário do voo<input type="time" id="flightTime"></label>
+      <label>Último dia de trabalho<input type="date" id="lastWorkDay"></label>
+
+      <div class="group-title">Expediente (seg–sex)</div>
+      <label>Início<input type="time" id="workStart"></label>
+      <label>Fim<input type="time" id="workEnd"></label>
+      <label>Almoço começa<input type="time" id="lunchStart"></label>
+      <label>Almoço termina<input type="time" id="lunchEnd"></label>
+      <div class="warn" id="warn"></div>
+
+      <div class="group-title">Sono</div>
+      <label>Horário de dormir<input type="time" id="bedtime"></label>
+
+      <div class="group-title">Folgas e feriados</div>
+      <div class="row">
+        <label>Adicionar data<input type="date" id="offInput"></label>
+        <button class="btn" id="offAdd" type="button">Adicionar</button>
+      </div>
+      <div class="offs" id="offList"></div>
+
+      <div class="row" style="justify-content:space-between;margin-top:6px">
+        <span class="muted">Tudo é salvo neste navegador. Horários sempre no fuso de Seattle.</span>
+        <button class="btn ghost" id="reset" type="button">Restaurar padrão</button>
+      </div>
+    </div>
+  </details>
+
+  <footer>Todos os cálculos usam o fuso America/Los_Angeles (Seattle/Bellevue), onde quer que você abra a página.</footer>
+</div>
+
+<script>
+/*CORE-START*/
+const TZ = 'America/Los_Angeles';
+const DEFAULTS = {
+  flightDate: '2026-11-26', flightTime: '07:00', lastWorkDay: '2026-11-25',
+  workStart: '09:00', workEnd: '18:00', lunchStart: '12:00', lunchEnd: '13:00',
+  bedtime: '23:00', daysOff: []
+};
+const HOUR = 3600000, MIN = 60000, DAY = 86400000;
+
+const partsFmt = new Intl.DateTimeFormat('en-US', {
+  timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit',
+  hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+});
+
+// Wall-clock parts in Seattle for a UTC timestamp.
+function laParts(ms) {
+  const o = {};
+  for (const p of partsFmt.formatToParts(new Date(ms))) if (p.type !== 'literal') o[p.type] = +p.value;
+  if (o.hour === 24) o.hour = 0;
+  return o;
+}
+function tzOffset(ms) {
+  const p = laParts(ms);
+  return Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second) - Math.floor(ms / 1000) * 1000;
+}
+// Convert a Seattle wall-clock date ("YYYY-MM-DD") + time ("HH:MM") into a UTC timestamp (DST-safe).
+function laToUtc(ymd, hm) {
+  const [y, m, d] = ymd.split('-').map(Number);
+  const [h, mi] = hm.split(':').map(Number);
+  const guess = Date.UTC(y, m - 1, d, h, mi);
+  let t = guess - tzOffset(guess);
+  const o2 = tzOffset(t);
+  if (guess - o2 !== t) t = guess - o2;
+  return t;
+}
+function laYmd(ms) {
+  const p = laParts(ms);
+  return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`;
+}
+function addDays(ymd, n) {
+  const [y, m, d] = ymd.split('-').map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d + n));
+  return t.toISOString().slice(0, 10);
+}
+function weekday(ymd) {
+  const [y, m, d] = ymd.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+}
+const toMin = hm => { const [h, m] = hm.split(':').map(Number); return h * 60 + m; };
+const isWeekend = ymd => { const w = weekday(ymd); return w === 0 || w === 6; };
+
+// Work blocks for one day, as [startHM, endHM] pairs, with lunch removed.
+function workBlocks(s) {
+  const ws = toMin(s.workStart), we = toMin(s.workEnd), ls = toMin(s.lunchStart), le = toMin(s.lunchEnd);
+  if (we <= ws) return [];
+  const blocks = [];
+  if (le > ls && ls < we && le > ws) {
+    if (ls > ws) blocks.push([s.workStart, s.lunchStart]);
+    if (we > le) blocks.push([s.lunchEnd, s.workEnd]);
+  } else {
+    blocks.push([s.workStart, s.workEnd]);
+  }
+  return blocks;
+}
+
+function compute(s, now) {
+  const flight = laToUtc(s.flightDate, s.flightTime);
+  const remain = Math.max(0, flight - now);
+  const today = laYmd(now);
+  const off = new Set(s.daysOff);
+  const blocks = workBlocks(s);
+
+  // Remaining work time: only future parts of work blocks, before the flight.
+  let workMs = 0, workDays = 0, inWork = false, lastWorkDate = null;
+  const lastDay = s.lastWorkDay && s.lastWorkDay < s.flightDate ? s.lastWorkDay : s.flightDate;
+  for (let d = today, i = 0; d <= lastDay && i < 800; d = addDays(d, 1), i++) {
+    if (isWeekend(d) || off.has(d)) continue;
+    let dayMs = 0;
+    for (const [a, b] of blocks) {
+      const A = laToUtc(d, a), B = laToUtc(d, b);
+      const s2 = Math.max(A, now), e2 = Math.min(B, flight);
+      if (e2 > s2) dayMs += e2 - s2;
+      if (now >= A && now < B && now < flight) inWork = true;
+    }
+    if (dayMs > 0) { workMs += dayMs; workDays++; lastWorkDate = d; }
+  }
+
+  // Nights: bedtimes still in the future and before the flight, from today to the eve of the flight.
+  let nights = 0;
+  const bedEarly = toMin(s.bedtime) < 12 * 60; // e.g. 00:30 belongs to the following calendar day
+  for (let d = today, i = 0; d < s.flightDate && i < 800; d = addDays(d, 1), i++) {
+    const t = laToUtc(bedEarly ? addDays(d, 1) : d, s.bedtime);
+    if (t > now && t < flight) nights++;
+  }
+
+  return { flight, remain, today, workMs, workDays, inWork, nights, lastWorkDate, done: remain === 0 };
+}
+/*CORE-END*/
+
+// ---------- State & storage ----------
+const KEY = 'brasil-countdown-v1';
+let S = load();
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) return { ...DEFAULTS, ...JSON.parse(raw) };
+  } catch (e) {}
+  return { ...DEFAULTS, daysOff: [] };
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+// ---------- Formatting ----------
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+const nf1 = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
+const fmtNow = new Intl.DateTimeFormat('pt-BR', { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+const fmtFlight = new Intl.DateTimeFormat('pt-BR', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+const fmtShort = new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC', weekday: 'short', day: '2-digit', month: '2-digit' });
+const fmtMonth = new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC', month: 'long', year: 'numeric' });
+const ymdToDate = ymd => { const [y, m, d] = ymd.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d, 12)); };
+const plural = (n, one, many) => n === 1 ? one : many;
+
+// ---------- Rendering ----------
+let lastCalKey = '';
+function tick() {
+  const now = Date.now();
+  const r = compute(S, now);
+
+  $('nowLine').textContent = 'Agora em Seattle: ' + fmtNow.format(now);
+  $('flightLine').innerHTML = 'Voo <b>' + fmtFlight.format(r.flight) + '</b> · horário de Seattle';
+  document.body.classList.toggle('done', r.done);
+
+  // Total countdown
+  const totalSec = Math.floor(r.remain / 1000);
+  const H = Math.floor(totalSec / 3600), M = Math.floor(totalSec % 3600 / 60), Sx = totalSec % 60;
+  $('totalBig').textContent = `${H}:${pad(M)}:${pad(Sx)}`;
+
+  // Work countdown (rounded up to the minute so it only reaches 0 when really done)
+  const wMin = Math.ceil(r.workMs / MIN);
+  $('workBig').innerHTML = `${Math.floor(wMin / 60)}<small>h</small>${pad(wMin % 60)}<small>min</small>`;
+  const jornadas = r.workMs / (8 * HOUR);
+  $('workEq').innerHTML = r.workMs > 0
+    ? `≈ <b>${nf1.format(jornadas)}</b> ${plural(Math.round(jornadas * 10) / 10, 'jornada', 'jornadas')} de 8 horas`
+    : 'Trabalho encerrado até a viagem 🎉';
+  const pill = $('workPill');
+  pill.className = 'pill ' + (r.inWork ? 'on' : 'off');
+  $('workPillText').textContent = r.done ? 'Férias!' : r.inWork ? 'Expediente em andamento — descendo' : (r.workMs > 0 ? 'Fora do expediente — pausado' : 'Nada mais de expediente');
+
+  // Days / hours / minutes
+  const mins = Math.floor(r.remain / MIN);
+  $('dD').textContent = Math.floor(mins / 1440);
+  $('dH').textContent = Math.floor(mins % 1440 / 60);
+  $('dM').textContent = mins % 60;
+  $('lastDayLine').textContent = r.lastWorkDate
+    ? 'Último dia com expediente: ' + fmtShort.format(ymdToDate(r.lastWorkDate))
+    : (r.done ? '' : 'Sem mais expedientes antes do voo.');
+
+  // Work days & nights
+  $('workDays').textContent = r.workDays;
+  const todayHasWork = r.workDays > 0 && r.lastWorkDate && compute({ ...S, lastWorkDay: r.today < S.flightDate ? r.today : S.flightDate }, now).workMs > 0;
+  $('workDaysTxt').textContent = plural(r.workDays, 'dia com trabalho pela frente', 'dias com trabalho pela frente') + (todayHasWork ? ' (incluindo hoje)' : '');
+  $('nights').textContent = r.nights;
+  $('nightsTxt').textContent = plural(r.nights, 'noite de sono até a viagem', 'noites de sono até a viagem');
+
+  // Phrases
+  if (r.done) {
+    $('phraseWork').textContent = 'Boa viagem! O Brasil te espera 🇧🇷';
+    $('phraseNights').textContent = '';
+  } else {
+    let pw;
+    if (r.workMs <= 0) pw = 'Zero horas de trabalho pela frente. Agora é só fazer as malas 🧳';
+    else if (r.workMs < HOUR) pw = `Só mais ${wMin} ${plural(wMin, 'minuto', 'minutos')} de trabalho 💪`;
+    else { const h = Math.round(r.workMs / HOUR); pw = `Só mais ${h} ${plural(h, 'hora', 'horas')} de trabalho 💪`; }
+    $('phraseWork').textContent = pw;
+    $('phraseNights').textContent = r.nights > 0
+      ? `Mais ${r.nights} ${plural(r.nights, 'noite', 'noites')} e partiu Brasil 🇧🇷`
+      : 'Nenhuma noite a mais — partiu Brasil 🇧🇷';
+  }
+
+  const calKey = r.today + JSON.stringify(S);
+  if (calKey !== lastCalKey) { lastCalKey = calKey; renderCalendar(r); }
+}
+
+function renderCalendar(r) {
+  const box = $('days');
+  box.innerHTML = '';
+  const off = new Set(S.daysOff);
+  const lastDay = S.lastWorkDay && S.lastWorkDay < S.flightDate ? S.lastWorkDay : S.flightDate;
+  let start = r.today;
+  if (start > S.flightDate) start = S.flightDate;
+  const gridStart = addDays(start, -weekday(start));
+  const gridEnd = addDays(S.flightDate, 6 - weekday(S.flightDate));
+  if (gridEnd < gridStart) return;
+  let curMonth = '';
+  for (let d = gridStart, i = 0; d <= gridEnd && i < 400; d = addDays(d, 1), i++) {
+    const month = d.slice(0, 7);
+    if (weekday(d) === 0 && month !== curMonth) {
+      // Month label at the start of each week where the month changes
+      curMonth = month;
+      const ml = document.createElement('div');
+      ml.className = 'month';
+      ml.textContent = fmtMonth.format(ymdToDate(d));
+      box.appendChild(ml);
+    } else if (weekday(d) === 0) {
+      const wEnd = addDays(d, 6).slice(0, 7);
+      if (wEnd !== curMonth) {
+        curMonth = wEnd;
+        const ml = document.createElement('div');
+        ml.className = 'month';
+        ml.textContent = fmtMonth.format(ymdToDate(addDays(d, 6)));
+        box.appendChild(ml);
+      }
+    }
+    const el = document.createElement('div');
+    el.className = 'day';
+    const dayNum = +d.slice(8);
+    let tag = '';
+    if (d < start) { el.classList.add('past'); }
+    else if (d > S.flightDate) { el.classList.add('blank'); }
+    else if (d === S.flightDate) { el.classList.add('flight'); tag = 'voo ✈️'; }
+    else if (isWeekend(d)) { el.classList.add('weekend'); }
+    else if (off.has(d)) { el.classList.add('off'); tag = 'folga'; el.onclick = () => toggleOff(d); el.title = 'Remover folga'; }
+    else if (d > lastDay) { el.classList.add('free'); tag = 'livre'; }
+    else { el.classList.add('work'); tag = 'trabalho'; el.onclick = () => toggleOff(d); el.title = 'Marcar como folga'; }
+    if (d === r.today) el.classList.add('today');
+    el.innerHTML = dayNum + (tag ? `<small>${tag}</small>` : '');
+    box.appendChild(el);
+  }
+}
+
+function toggleOff(d) {
+  const set = new Set(S.daysOff);
+  set.has(d) ? set.delete(d) : set.add(d);
+  S.daysOff = [...set].sort();
+  commit();
+}
+
+// ---------- Settings form ----------
+const FIELDS = ['flightDate', 'flightTime', 'lastWorkDay', 'workStart', 'workEnd', 'lunchStart', 'lunchEnd', 'bedtime'];
+function fillForm() {
+  for (const f of FIELDS) $(f).value = S[f] || '';
+  renderOffs();
+  validate();
+}
+function renderOffs() {
+  const list = $('offList');
+  list.innerHTML = '';
+  if (!S.daysOff.length) { list.innerHTML = '<span class="muted">Nenhuma folga marcada.</span>'; return; }
+  for (const d of S.daysOff) {
+    const c = document.createElement('span');
+    c.className = 'chip';
+    c.innerHTML = `${fmtShort.format(ymdToDate(d))} <button type="button" aria-label="Remover">×</button>`;
+    c.querySelector('button').onclick = () => toggleOff(d);
+    list.appendChild(c);
+  }
+}
+function validate() {
+  const msgs = [];
+  if (toMin(S.workEnd) <= toMin(S.workStart)) msgs.push('O fim do expediente precisa ser depois do início.');
+  if (toMin(S.lunchEnd) <= toMin(S.lunchStart)) msgs.push('O fim do almoço precisa ser depois do início.');
+  const w = $('warn');
+  w.textContent = msgs.join(' ');
+  w.style.display = msgs.length ? 'block' : 'none';
+}
+function commit() { save(); fillForm(); lastCalKey = ''; tick(); }
+
+for (const f of FIELDS) {
+  $(f).addEventListener('change', e => {
+    if (!e.target.value && f !== 'lastWorkDay') { e.target.value = S[f]; return; }
+    S[f] = e.target.value;
+    commit();
+  });
+}
+$('offAdd').onclick = () => {
+  const v = $('offInput').value;
+  if (v && !S.daysOff.includes(v)) { S.daysOff = [...S.daysOff, v].sort(); $('offInput').value = ''; commit(); }
+};
+$('reset').onclick = () => { S = { ...DEFAULTS, daysOff: [] }; commit(); };
+
+fillForm();
+tick();
+// Align ticks to the second boundary for smooth updates
+setTimeout(() => { tick(); setInterval(tick, 1000); }, 1000 - (Date.now() % 1000));
+</script>
+</body>
+</html>
