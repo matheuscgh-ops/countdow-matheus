@@ -1,0 +1,54 @@
+name: Refresh link preview
+
+on:
+  schedule:
+    - cron: "17 * * * *" # hourly
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: refresh-preview
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stop after the trip
+        id: gate
+        run: |
+          # The countdown ends on 2026-11-26; keep refreshing until the 27th, then do nothing.
+          if [ "$(TZ=America/Los_Angeles date +%Y%m%d)" -gt 20261127 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.skip != 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Generate preview
+        if: steps.gate.outputs.skip != 'true'
+        run: |
+          pip install --quiet pillow
+          python tools/make_preview.py
+
+      - name: Commit and publish
+        if: steps.gate.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then
+            echo "No changes."; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Refresh link preview snapshot"
+          git push
+          # Pushes made with GITHUB_TOKEN may not trigger a Pages build on their own.
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" || true
